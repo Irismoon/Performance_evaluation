@@ -4,7 +4,7 @@
 %其实延时和正确率归根结底是一个东西。
 tic;head_for_online_performance;
 %data_src=load('..\\data-2010.07.11_23.20\\data_cnt-2010.07.11_23.20.txt');
-data_src=load('data_cnt-2017.01.15_14.24.txt');
+data_src=load('data_cnt-2017.01.15_15.49.txt');
 for i=1:DATA_LENGTH
     x=data_src(i,:);
     data_add_for_online_performance;

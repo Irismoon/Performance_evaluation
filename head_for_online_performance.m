@@ -29,7 +29,7 @@ TRIAL_TRAISIENT = Fs/4+segment;
 TRIAL_STEADY = TRIAL - TRIAL_TRAISIENT;
 %trigger=zeros(DATA_LENGTH*(TRIAL_STEADY/TRIAL)/slide,1);
 trigger=zeros(DATA_LENGTH/slide,1);
-Signal = trigger;Signal_1 = zeros(DATA_LENGTH/slide,2);Signal_2=Signal_1;
+Signal = trigger;Signal_1 = zeros(DATA_LENGTH/slide,1);Signal_2=Signal_1;
 Vari = trigger;
 R_1 = zeros(length(trigger),4);
 R_2 = zeros(length(trigger),4);
