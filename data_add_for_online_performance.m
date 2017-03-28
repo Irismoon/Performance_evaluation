@@ -54,18 +54,19 @@ if mod(data_index,slide)==0%每slide个数据处理一次
             rr1 = sort(rou_1,'descend');signal_1=find(rou_1==rr1(1) | rou_1==rr1(2));Signal_1(index,:) = signal_1;
             rr2 = sort(rou_2,'descend');signal_2=find(rou_2==rr2(1) | rou_2==rr2(2));Signal_2(index,:) = signal_2;
             
-%             if (signal_1~=signal_2)
-%                 Signal(index) = 5;
-%             else
-%                 Signal(index) = find(rou_1==rr1(1));%按基波
-%             end
-            if(intersect(signal_1,signal_2))
-                Signal(index) = find(rou_1==rr1(1));
-            else
+            if (signal_1~=signal_2)
                 Signal(index) = 5;
+            else
+                Signal(index) = find(rou_1==rr1(1));%按基波
             end
+%             if(intersect(signal_1,signal_2))
+%                 Signal(index) = find(rou_1==rr1(1));
+%             else
+%                 Signal(index) = 5;
+%             end
             trigger(index) = x(DATA_CHANNEL+1);
          %end
+         
         end  
 else
     signal_1=-1;
