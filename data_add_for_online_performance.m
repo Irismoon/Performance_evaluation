@@ -28,20 +28,22 @@ if mod(data_index,slide)==0%每slide个数据处理一次
                 Cxy = C(1:sx, sx+1:sx+sy);         %求得X和Ｙ的互协方差矩阵
                 Cyx = Cxy';
                 Cyy = C(sx+1:sx+sy, sx+1:sx+sy) + 10^(-8)*eye(sy);%求得Y的自协方差矩阵
-                [Wx,r] = eig(inv(Cxx)*Cxy*inv(Cyy)*Cyx);%r is eigenvalues;A*Wx = r*Wx，r的index与Wx的列的index对应
+                [Wx,r] = eig((Cxx\Cxy)*(Cyy\Cyx));%注意加括号，r is eigenvalues;A*Wx = r*Wx，r的index与Wx的列的index对应
                 r = sqrt(real(r));      % Canonical correlations   典型相关系数
                 r = diag(r);%矩阵转换成向量后上下翻转
-%                 V = fliplr(Wx);%左右翻转
                 [r,I]= sort((real(r)));
                 r = flipud(r);	
-%                 for j = 1:length(I)
-%                     Wx(:,j) = V(:,I(j));  % sort reversed eigenvectors in ascending order
-%                 end
-%                 Wx = fliplr(Wx);
                 rou(j) = r(1);
             end
+%             rou(1) = rou(1)+ 0.1;%LRJ
+%             rou(3) = rou(3)+ 0.1;%WM
+%             rou(4) = rou(4)+ 0.1;%WM
+             rou(2) = rou(2)-0.05; rou(3)=rou(3)-0.05;                   %lss
             R(index,:) = rou;
             [velocity,signal] = max(rou);
+            if velocity<=0.4
+                signal = 5;
+            end
             variance = var(rou);
 %            signal = signal-1;
             Vari(index) = variance;
