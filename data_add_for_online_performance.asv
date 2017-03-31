@@ -55,7 +55,6 @@ if mod(data_index,slide)==0%每slide个数据处理一次
          
          if data_index==DATA_LENGTH
                 N=length(trigger);
-                trigger(index+1:end) = trigger(index);
                 [C,err,P,logp,coeff] = classify(R(1,:),R(1:N,:),trigger(1:N));
                 save('coeff.mat','coeff');
          end
@@ -71,12 +70,12 @@ if mod(data_index,slide)==0%每slide个数据处理一次
                 Cxy = C(1:sx, sx+1:sx+sy);         %求得X和Ｙ的互协方差矩阵
                 Cyx = Cxy';
                 Cyy = C(sx+1:sx+sy, sx+1:sx+sy) + 10^(-8)*eye(sy);%求得Y的自协方差矩阵
-                [Wx,rr] = eig((Cxx\Cxy)*(Cyy\Cyx));%注意加括号，rr is eigenvalues;A*Wx = rr*Wx，rr的index与Wx的列的index对应
-                rr = sqrt(real(rr));      % Canonical correlations   典型相关系数
-                rr = diag(rr);%矩阵转换成向量后上下翻转
-                [rr,I]= sort((real(rr)));
-                rr = flipud(rr);	
-                rou(j) = rr(1);
+                [Wx,r] = eig((Cxx\Cxy)*(Cyy\Cyx));%注意加括号，r is eigenvalues;A*Wx = r*Wx，r的index与Wx的列的index对应
+                r = sqrt(real(r));      % Canonical correlations   典型相关系数
+                r = diag(r);%矩阵转换成向量后上下翻转
+                [r,I]= sort((real(r)));
+                r = flipud(r);	
+                rou(j) = r(1);
             end
             r=zeros(1,5);
             r(1)=r(1)+(coeff(1,2).linear'*rou'+coeff(1,2).const>0);
@@ -104,13 +103,13 @@ if mod(data_index,slide)==0%每slide个数据处理一次
             r(5)=r(5)+(coeff(5,4).linear'*rou'+coeff(5,4).const>0);
             r(5)=r(5)+(coeff(5,2).linear'*rou'+coeff(5,2).const>0);
             
-            [b,Signal(index)]=max(r);
-            trigger(index) = x(DATA_CHANNEL+1);
+            [b,signal2(k)]=max(r(1:));
+            signal2(k)=signal2(k)-1;
+            k=k+1;
         end
-    end
-% else
-%     signal=-1;
-%     velocity=0;
-%     variance=0;
-%     output = [signal velocity variance];
+else
+    signal=-1;
+    velocity=0;
+    variance=0;
+    output = [signal velocity variance];
 end
